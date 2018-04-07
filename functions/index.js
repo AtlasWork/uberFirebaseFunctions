@@ -96,8 +96,7 @@ function updatePaymentsPending(uid, paymentId){
 
 
 exports.payout = functions.https.onRequest((request, response) => {
-    var uid = "IajBLhD0d6gWsQlnbvebxCZ79LC3";
-    getPayoutsPending(uid).then((array) => {
+    getPayoutsPending(request.body.uid).then((array) => {
         getPayoutsAmount(array).then((value) => {
 
             var valueTrunc = parseFloat(Math.round(value * 100) / 100).toFixed(2);
@@ -116,7 +115,7 @@ exports.payout = functions.https.onRequest((request, response) => {
                             value: valueTrunc,
                             currency: "USD"
                         },
-                        receiver: "info@simcoder.com",
+                        receiver: request.body.email,
                         note: "Thank you.",
                         sender_item_id: "item_3"
                     }
@@ -130,7 +129,7 @@ exports.payout = functions.https.onRequest((request, response) => {
                 }else{
                     console.info("payout created");
                     console.info(payout);
-                    updatePaymentsPending(uid, sender_batch_id).then(() =>{
+                    updatePaymentsPending(request.body.uid, sender_batch_id).then(() =>{
                         response.status('200').end();
                         return;
                     }).catch((error) => {
