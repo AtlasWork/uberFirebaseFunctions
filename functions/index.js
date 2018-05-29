@@ -8,7 +8,8 @@ admin.initializeApp(functions.config().firebase);
 paypal.configure({
     mode: 'sandbox',
     client_id: functions.config().paypal.client_id,
-    client_secret: functions.config().paypal.client_secret
+    client_secret: functions.config().paypal.client_secret,
+    client_atlas_address: functions.config().atlas_address
 })
 
 
@@ -106,14 +107,14 @@ exports.payout = functions.https.onRequest((request, response) => {
             const payReq = JSON.stringify({
                 sender_batch_header: {
                     sender_batch_id: sender_batch_id,
-                    email_subject: "You have a payment"
+                    email_subject: "You have a WORK payment"
                 },
                 items: [
                     {
                         recipient_type: "EMAIL",
                         amount: {
                             value: valueTrunc,
-                            currency: "USD"
+                            currency: "WORK"
                         },
                         receiver: request.body.email,
                         note: "Thank you.",
