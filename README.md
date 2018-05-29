@@ -1,2 +1,2 @@
-# uber_firebase_functions
-uber firebase functions -> Payout
+# Atlas Gateway - WORK Payout
+Atlas Gateway firebase functions -> Payout
